@@ -4,6 +4,8 @@ const path = require("path");
 const express = require("express");
 const userRoute = require("./routes/user.routes");
 const connectToDb = require("./db");
+const cookirParser = require("cookie-parser");
+const {checkForAuthenticationCookie} = require("./middleware/authentication.middleware")
 
 const app = express();
 const PORT = 8000;
@@ -13,12 +15,17 @@ app.set("views", path.resolve("./views"));
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
+app.use(cookirParser());
 
-app.use("/api/user", userRoute);
+app.use(checkForAuthenticationCookie("token"))
 
 app.get("/", (req, res) => {
-  res.render("home");
+  res.render("home", {
+    user: req.user,
+  });
 });
+
+app.use("/api/user", userRoute);
 
 async function main() {
   await connectToDb();

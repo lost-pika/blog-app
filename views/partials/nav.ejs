@@ -17,9 +17,12 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="#">Home</a>
         </li>
+        <!-- Add blog tabhi dikhayenge jab current user exist karta hai (if user is logged-in) -->
+        <% if(locals.user){ %>
         <li class="nav-item">
           <a class="nav-link" href="#">Add blog</a>
         </li>
+
         <li class="nav-item dropdown">
           <a
             class="nav-link dropdown-toggle"
@@ -31,10 +34,24 @@
             Srishti Verma
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Logout</a></li>
+            <li><a class="dropdown-item" href="/api/user/logout">Logout</a></li>
           </ul>
         </li>
+        <% } else {%>
+        <li class="nav-item">
+          <a class="nav-link" href="/api/user/signup">Create Account</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/api/user/signin">Signin</a>
+        </li>
+        <% } %>
       </ul>
     </div>
   </div>
 </nav>
+
+<% if(locals.error) { %>
+<div>
+  <div class="alert alert-danger" role="alert"><%= locals.error %></div>
+</div>
+<% } %>
