@@ -11,7 +11,7 @@ const createBlog = async (req, res) => {
       coverImageUrl: `/uploads/${req.file.filename}`,
     });
 
-    return res.redirect(`/blog/${blog._id}`);
+    return res.redirect(`api/blog/${blog._id}`);
   } catch (error) {}
 };
 

@@ -4,6 +4,7 @@ const path = require("path");
 const express = require("express");
 const userRouter = require("./routes/user.routes");
 const blogRouter = require("./routes/blog.route");
+const commentRouter = require("./routes/comment.route");
 const connectToDb = require("./db");
 const cookirParser = require("cookie-parser");
 const {checkForAuthenticationCookie} = require("./middleware/authentication.middleware")
@@ -32,6 +33,7 @@ app.get("/", async (req, res) => {
 
 app.use("/api/user", userRouter);
 app.use("/api/blog", blogRouter);
+app.use("/api/comment", commentRouter);
 
 async function main() {
   await connectToDb();
